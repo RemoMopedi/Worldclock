@@ -10,11 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         cities.forEach(city => {
           const option = document.createElement("option");
-          option.value = city.timezone;
+          option.value = city.timezone; // Use the timezone for value
           option.textContent = `${city.name} ${city.emoji}`;
           citiesSelectElement.appendChild(option);
         });
-
+        
         citiesSelectElement.addEventListener("change", (event) => {
           const selectedValue = event.target.value;
           if (selectedValue) {
@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
 
+        // Optionally initialize with the first city
         if (cities.length > 0) {
           updateCity(cities[0].timezone, cities);
         }
@@ -48,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const city = cities.find(c => c.timezone === cityTimeZone);
     const cityTime = moment().tz(cityTimeZone);
     const citiesElement = document.querySelector("#cities");
-    
+
     citiesElement.innerHTML = `
       <div class="city">
         <div>
@@ -60,6 +61,27 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
+  function displayUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
+        
+        const userCity = "Your City";
+        const userTimezone = moment.tz.guess();
+        const userTime = moment().tz(userTimezone);
+
+        const currentLocationElement = document.querySelector("#current-location");
+        currentLocationElement.innerHTML = `
+          <h2>${userCity} 🌍</h2>
+          <div class="date">${userTime.format("MMMM Do YYYY")}</div>
+          <div class="time">${userTime.format("h:mm:ss")} <small>${userTime.format("A")}</small></div>
+        `;
+      });
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  }
+
   fetchCities();
   setInterval(() => {
     fetch('cities.json')
@@ -67,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(data => {
         const cities = data.cities;
         updateTime(cities);
+        displayUserLocation();
       });
   }, 1000);
 });
