@@ -1,0 +1,22 @@
+{
+  "cities": [
+    {
+      "name": "Tokyo",
+      "country": "Japan",
+      "timezone": "Asia/Tokyo",
+      "emoji": "🇯🇵"
+    },
+    {
+      "name": "Paris",
+      "country": "France",
+      "timezone": "Europe/Paris",
+      "emoji": "🇫🇷"
+    },
+    {
+      "name": "Rio de Janeiro",
+      "country": "Brazil",
+      "timezone": "America/Sao_Paulo",
+      "emoji": "🇧🇷"
+    }
+  ]
+}
