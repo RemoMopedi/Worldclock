@@ -1,62 +1,72 @@
-function updateTime() {
- 
-  let tokyoElement = document.querySelector("#tokyo");
-  if (tokyoElement) {
-    let tokyoDateElement = tokyoElement.querySelector(".date");
-    let tokyoTimeElement = tokyoElement.querySelector(".time");
-    let tokyoTime = moment().tz("Asia/Tokyo");
+document.addEventListener("DOMContentLoaded", () => {
 
-    tokyoDateElement.innerHTML = tokyoTime.format("MMMM Do YYYY");
-    tokyoTimeElement.innerHTML = tokyoTime.format(
-      "h:mm:ss [<small>]A[</small>]"
-    );
+  function fetchCities() {
+    fetch('cities.json')
+      .then(response => response.json())
+      .then(data => {
+        const cities = data.cities;
+        const citiesSelectElement = document.querySelector("#city-select");
+        const citiesContainer = document.querySelector("#cities");
+
+        cities.forEach(city => {
+          const option = document.createElement("option");
+          option.value = city.timezone;
+          option.textContent = `${city.name} ${city.emoji}`;
+          citiesSelectElement.appendChild(option);
+        });
+
+        citiesSelectElement.addEventListener("change", (event) => {
+          const selectedValue = event.target.value;
+          if (selectedValue) {
+            updateCity(selectedValue, cities);
+          }
+        });
+
+        if (cities.length > 0) {
+          updateCity(cities[0].timezone, cities);
+        }
+      })
+      .catch(error => console.error('Error fetching cities:', error));
   }
 
-  let parisElement = document.querySelector("#paris");
-  if (parisElement) {
-    let parisDateElement = parisElement.querySelector(".date");
-    let parisTimeElement = parisElement.querySelector(".time");
-    let parisTime = moment().tz("Europe/Paris");
+  function updateTime(cities) {
+    cities.forEach(city => {
+      let cityElement = document.querySelector(`#${city.name.toLowerCase().replace(" ", "-")}`);
+      if (cityElement) {
+        let cityDateElement = cityElement.querySelector(".date");
+        let cityTimeElement = cityElement.querySelector(".time");
+        let cityTime = moment().tz(city.timezone);
 
-    parisDateElement.innerHTML = parisTime.format("MMMM Do YYYY");
-    parisTimeElement.innerHTML = parisTime.format(
-      "h:mm:ss [<small>]A[</small>]"
-    );
+        cityDateElement.innerHTML = cityTime.format("MMMM Do YYYY");
+        cityTimeElement.innerHTML = cityTime.format("h:mm:ss [<small>]A[</small>]");
+      }
+    });
   }
 
-  let rioElement = document.querySelector("#rio");
-  if (rioElement) {
-    let rioDateElement = rioElement.querySelector(".date");
-    let rioTimeElement = rioElement.querySelector(".time");
-    let rioTime = moment().tz("America/Sao_Paulo");
-
-    rioDateElement.innerHTML = rioTime.format("MMMM Do YYYY");
-    rioTimeElement.innerHTML = rioTime.format(
-      "h:mm:ss [<small>]A[</small>]"
-    );
+  function updateCity(cityTimeZone, cities) {
+    const cityName = cityTimeZone.split("/")[1].replace("_", " ");
+    const city = cities.find(c => c.timezone === cityTimeZone);
+    const cityTime = moment().tz(cityTimeZone);
+    const citiesElement = document.querySelector("#cities");
+    
+    citiesElement.innerHTML = `
+      <div class="city">
+        <div>
+          <h2>${city.name} ${city.emoji}</h2>
+          <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
+        </div>
+        <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format("A")}</small></div>
+      </div>
+    `;
   }
-}
 
-function updateCity(event) {
-  let cityTimeZone = event.target.value;
-  let cityName = cityTimeZone.replace("_", " ").split("/")[1];
-  let cityTime = moment().tz(cityTimeZone);
-  let citiesElement = document.querySelector("#cities");
-  citiesElement.innerHTML = `
-  <div class="city">
-    <div>
-      <h2>${cityName}</h2>
-      <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
-    </div>
-    <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
-    "A"
-  )}</small></div>
-  </div>
-  `;
-}
-
-updateTime();
-setInterval(updateTime, 1000);
-
-let citiesSelectElement = document.querySelector("select");
-citiesSelectElement.addEventListener("change", updateCity);
+  fetchCities();
+  setInterval(() => {
+    fetch('cities.json')
+      .then(response => response.json())
+      .then(data => {
+        const cities = data.cities;
+        updateTime(cities);
+      });
+  }, 1000);
+});
