@@ -1,6 +1,6 @@
 body {
-  background-color: #f9f7fe;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+ background-color: #f5f5dc;
+   font-family: sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -9,14 +9,14 @@ h1 {
   text-align: center;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 36px;
-  color: #4a4a4a;
+  color: #4e3b31;
   margin-bottom: 40px;
 }
 
 h2 {
   margin: 0 0 5px;
   font-size: 28px;
-  color: #333;
+  color: #3d2a2a;
 }
 
 select {
@@ -25,7 +25,7 @@ select {
   font-size: 18px;
   border-radius: 4px;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #b2a78e;
   background-color: #fff;
   margin-bottom: 20px;
   color: #4a4a4a;
@@ -34,7 +34,7 @@ select {
 .container {
   max-width: 600px;
   margin: 60px auto;
-  background: white;
+  background: #fff;
   padding: 30px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 12px;
@@ -55,18 +55,20 @@ select {
 .date {
   opacity: 0.7;
   font-size: 16px;
+  color: #6f4c3e;
 }
 
 .time {
   font-size: 48px;
   font-weight: bold;
-  color: #2c3e50;
+  color: #4e3b31;
 }
 
 .time small {
   font-size: 24px;
   vertical-align: middle;
   line-height: 48px;
+  color: #b5a493;
 }
 
 footer {
