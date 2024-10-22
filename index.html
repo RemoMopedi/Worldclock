@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!--<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -47,4 +47,38 @@
       <script src="worldclock.js"></script>
     </footer>
   </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WORLDCLOCK</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Global World Clock</h1>
+
+      <select id="city">
+        <option value="">Select a city...</option>
+        <option value="Asia/Tokyo">Tokyo</option>
+        <option value="Europe/Paris">Paris</option>
+        <option value="America/Sao_Paulo">Rio de Janeiro</option>
+      </select>
+
+      <div id="cities"></div>
+    </div>
+
+    <footer>
+      This project was coded with <a href="https://code.visualstudio.com">VSCode</a> by Remo Mopedi and is
+      <a href="https://github.com/RemoMopedi/Worldclock.git">open sourced on GitHub</a>.
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.37/moment-timezone-with-data-1970-2030.min.js"></script>
+    <script src="worldclock.js"></script>
+  </body>
 </html>
+
